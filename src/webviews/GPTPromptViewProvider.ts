@@ -9,7 +9,7 @@ class GPTPromptViewProvider implements vscode.WebviewViewProvider {
 
   public resolveWebviewView(
     webviewView: vscode.WebviewView,
-    context: vscode.WebviewViewResolveContext<unknown>,
+    _context: vscode.WebviewViewResolveContext<unknown>,
     _token: vscode.CancellationToken
   ): void | Thenable<void> {
     this._view = webviewView;
@@ -29,16 +29,32 @@ class GPTPromptViewProvider implements vscode.WebviewViewProvider {
     response?: string;
   }): void {
     if (this._view) {
-      console.log("updatePanel called");
       this._view.show?.(true);
 
-      if (data.action === "explain") {
-        this._view.webview.postMessage({
-          action: data.action,
-          code: data.code,
-          response: data.response,
-        });
-        console.log("posted message");
+      switch (data.action) {
+        case "explain": {
+          console.log(data.action);
+          
+          this._view.webview.postMessage({
+            action: data.action,
+            code: data.code,
+            response: data.response,
+          });
+
+          break;
+        }
+
+        case "refactor": {
+          console.log(data.action);
+
+          this._view.webview.postMessage({
+            action: data.action,
+            code: data.code,
+            response: data.response,
+          });
+
+          break;
+        }
       }
     }
   }
@@ -47,19 +63,34 @@ class GPTPromptViewProvider implements vscode.WebviewViewProvider {
     const scriptUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, "resources", "main.js")
     );
+    const stylesheetUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(this._extensionUri, "resources", "main.css")
+    );
 
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
-    <title>GPT Code Assistant</title>
+      <title>GPT Code Assistant</title>
+
+      <link rel="stylesheet" href="${stylesheetUri}">
+
+      <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     </head>
 
     <body>
-      <code id="code-area"></code>
+      <h2 id="panel-title"></h2>
 
-      <span id="response-area"><span>
+      <div id="code-section">
+        <h3></h3>
+        <code id="code-area"></code>
+      </div>
 
-      <script src=${scriptUri}></script>
+      <div id="response-section">
+        <h3></h3>
+        <span id="response-area" markdown=1><span>
+      </div>
+
+    <script src=${scriptUri}></script>
     </body>
     </html>
     `;

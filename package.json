@@ -16,12 +16,20 @@
       {
         "command": "gpt-code-assistant.gptExplainSelection",
         "title": "GPT - Explain Selection"
+      },
+      {
+        "command": "gpt-code-assistant.gptRefactorSelection",
+        "title": "GPT - Refactor Selection"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "command": "gpt-code-assistant.gptExplainSelection",
+          "group": "navigation"
+        },
+        {
+          "command": "gpt-code-assistant.gptRefactorSelection",
           "group": "navigation"
         }
       ]

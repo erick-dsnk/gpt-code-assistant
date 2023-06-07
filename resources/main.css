@@ -1,0 +1,12 @@
+body {
+    padding: 10px;
+}
+
+#code-section, #response-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: hidden;
+}
