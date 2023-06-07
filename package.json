@@ -6,9 +6,13 @@
   "engines": {
     "vscode": "^1.78.0"
   },
+  "publisher": "erick-dsnk",
   "categories": [
     "Other"
   ],
+  "repository": {
+    "url": "https://github.com/erick-dsnk/gpt-code-assistant"
+  },
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
@@ -56,6 +60,7 @@
       "title": "GPT Code Assistant",
       "properties": {
         "gpt-code-assistant.api-key": {
+          "title": "OpenAI API Key",
           "type": "string",
           "default": "",
           "scope": "application"
@@ -84,9 +89,6 @@
     "mocha": "^10.2.0",
     "typescript": "^5.1.3"
   },
-  "enabledApiProposals": [
-    "contribEditorContentMenu"
-  ],
   "dependencies": {
     "openai": "^3.2.1"
   }

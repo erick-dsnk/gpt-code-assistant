@@ -32,9 +32,7 @@ class GPTPromptViewProvider implements vscode.WebviewViewProvider {
       this._view.show?.(true);
 
       switch (data.action) {
-        case "explain": {
-          console.log(data.action);
-          
+        case "explain": {          
           this._view.webview.postMessage({
             action: data.action,
             code: data.code,
@@ -45,8 +43,6 @@ class GPTPromptViewProvider implements vscode.WebviewViewProvider {
         }
 
         case "refactor": {
-          console.log(data.action);
-
           this._view.webview.postMessage({
             action: data.action,
             code: data.code,
